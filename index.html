@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayusangam - Home</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 30px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .navbar .brand {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #2c3e50;
+            text-decoration: none;
+        }
+        .navbar .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .navbar .user-name {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        .navbar .logout-btn {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .navbar .logout-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 40px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .nav-card {
+            background: #fff;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: #333;
+            display: block;
+            border: 2px solid transparent;
+        }
+        .nav-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            border-color: #3498db;
+        }
+        .nav-card .icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+            display: block;
+        }
+        .nav-card h3 {
+            color: #2c3e50;
+            margin: 15px 0 10px 0;
+            font-size: 1.4em;
+        }
+        .nav-card p {
+            color: #666;
+            margin: 0;
+            font-size: 0.95em;
+            line-height: 1.4;
+        }
+        .status-section {
+            margin: 30px 0;
+            padding: 25px;
+            border-radius: 15px;
+            background: #fff;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .status-section h2 {
+            color: #34495e;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .quick-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .stat-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .readiness-indicator {
+            display: inline-block;
+            padding: 15px 25px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 18px;
+            margin: 15px 0;
+            color: white;
+        }
+        .readiness-green {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+        }
+        .readiness-yellow {
+            background: linear-gradient(45deg, #f39c12, #e67e22);
+            box-shadow: 0 4px 15px rgba(243, 156, 18, 0.3);
+        }
+        .readiness-red {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .container { padding: 20px; }
+            h1 { font-size: 2em; }
+            .nav-grid { grid-template-columns: 1fr; }
+            .quick-stats { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="#" class="brand">🏋️ Ayusangam</a>
+        <div class="user-info">
+            <span class="user-name" id="user-name">Loading...</span>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <div class="status-section">
+            <h2>📊 Today's Overview</h2>
+            <div id="quick-stats" class="quick-stats">
+                <div class="stat-item">
+                    <div class="stat-value" id="today-workouts">0</div>
+                    <div class="stat-label">Workouts</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="today-volume">0kg</div>
+                    <div class="stat-label">Volume</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="today-weight">--</div>
+                    <div class="stat-label">Weight</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="today-sleep">--h</div>
+                    <div class="stat-label">Sleep</div>
+                </div>
+            </div>
+            <div id="readiness-indicator" class="readiness-indicator readiness-red" style="display: none;">
+                🎯 Readiness: Calculating...
+            </div>
+        </div>
+
+        <div class="nav-grid">
+            <a href="dashboard.html" class="nav-card">
+                <span class="icon">📊</span>
+                <h3>Dashboard</h3>
+                <p>View today's workouts, metrics, and get personalized insights</p>
+            </a>
+
+            <a href="profile.html" class="nav-card">
+                <span class="icon">👤</span>
+                <h3>Profile</h3>
+                <p>Manage your personal information, goals, and fitness preferences</p>
+            </a>
+
+            <a href="workout.html" class="nav-card">
+                <span class="icon">💪</span>
+                <h3>Log Workout</h3>
+                <p>Record your strength training sessions with sets, reps, and weights</p>
+            </a>
+
+            <a href="metrics.html" class="nav-card">
+                <span class="icon">❤️</span>
+                <h3>Log Metrics</h3>
+                <p>Track HRV, heart rate, sleep, bodyweight, and recovery indicators</p>
+            </a>
+
+            <a href="readiness.html" class="nav-card">
+                <span class="icon">🎯</span>
+                <h3>Readiness Check</h3>
+                <p>Calculate your training readiness based on recovery metrics</p>
+            </a>
+
+            <a href="progress.html" class="nav-card">
+                <span class="icon">📈</span>
+                <h3>Progress Tracking</h3>
+                <p>View weekly progress, personal records, and training trends</p>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8000';
+
+        // Check authentication on page load
+        window.onload = function() {
+            const token = localStorage.getItem('token');
+            const user = JSON.parse(localStorage.getItem('user') || 'null');
+
+            if (!token || !user) {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            // Set user name in navbar
+            document.getElementById('user-name').textContent = `${user.first_name} ${user.last_name}`;
+
+            // Load dashboard data
+            loadOverview();
+        };
+
+        function logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            window.location.href = 'login.html';
+        }
+
+        async function apiCall(endpoint, method = 'GET', data = null) {
+            const token = localStorage.getItem('token');
+            const config = {
+                method,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            };
+            if (data) config.body = JSON.stringify(data);
+
+            try {
+                const response = await fetch(`${API_BASE}${endpoint}`, config);
+
+                // Handle unauthorized
+                if (response.status === 401) {
+                    logout();
+                    return { status: 401, data: { error: 'Unauthorized' } };
+                }
+
+                const result = await response.json();
+                return { status: response.status, data: result };
+            } catch (error) {
+                return { status: 0, data: { error: error.message } };
+            }
+        }
+
+        async function loadOverview() {
+            const dashboardResult = await apiCall('/dashboard/');
+            const readinessResult = await apiCall('/readiness/');
+
+            if (dashboardResult.status === 200) {
+                updateQuickStats(dashboardResult.data);
+            }
+
+            if (readinessResult.status === 200) {
+                updateReadinessIndicator(readinessResult.data);
+            }
+        }
+
+        function updateQuickStats(data) {
+            const workouts = data.workouts || [];
+            const metrics = data.metrics || [];
+
+            // Update workout count
+            document.getElementById('today-workouts').textContent = workouts.length;
+
+            // Calculate total volume
+            const totalVolume = workouts.reduce((sum, w) => sum + (w.weight * w.sets * w.reps), 0);
+            document.getElementById('today-volume').textContent = `${totalVolume.toFixed(0)}kg`;
+
+            // Show latest weight and sleep if available
+            if (metrics.length > 0) {
+                const latest = metrics[0];
+                document.getElementById('today-weight').textContent = `${latest.bodyweight}kg`;
+                document.getElementById('today-sleep').textContent = `${latest.sleep_hours}h`;
+            }
+        }
+
+        function updateReadinessIndicator(readiness) {
+            const indicator = document.getElementById('readiness-indicator');
+            indicator.textContent = `🎯 Readiness: ${readiness.score}/100 - ${readiness.status}`;
+            indicator.style.display = 'inline-block';
+
+            // Set color class
+            indicator.className = 'readiness-indicator';
+            if (readiness.status === 'Green') {
+                indicator.classList.add('readiness-green');
+            } else if (readiness.status === 'Yellow') {
+                indicator.classList.add('readiness-yellow');
+            } else {
+                indicator.classList.add('readiness-red');
+            }
+        }
+    </script>
+</body>
+</html>

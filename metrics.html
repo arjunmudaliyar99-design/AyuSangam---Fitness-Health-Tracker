@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Tracker - Log Metrics</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e1e8ed;
+        }
+        .nav h1 {
+            color: #2c3e50;
+            margin: 0;
+            font-size: 2em;
+        }
+        .nav a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: background 0.3s ease;
+        }
+        .nav a:hover {
+            background: rgba(52, 152, 219, 0.1);
+        }
+        .section {
+            margin: 25px 0;
+            padding: 25px;
+            border-radius: 15px;
+            background: #fff;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        .section h2 {
+            color: #34495e;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+        input[type="text"]:focus, input[type="number"]:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            font-weight: normal;
+            cursor: pointer;
+            padding: 10px;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            transition: border-color 0.3s ease;
+        }
+        .checkbox-group label:hover {
+            border-color: #3498db;
+        }
+        .checkbox-group input[type="checkbox"] {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+        button {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+            width: 100%;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background: #f8f9fa;
+            border-left: 4px solid #3498db;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+        .success { border-left-color: #27ae60; background: #d4edda; }
+        .error { border-left-color: #e74c3c; background: #f8d7da; }
+        .info-box {
+            background: #e8f4fd;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .info-box h3 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .container { padding: 20px; }
+            .nav { flex-direction: column; gap: 10px; text-align: center; }
+            .checkbox-group { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <h1>❤️ Log Metrics</h1>
+            <a href="index.html">← Back to Home</a>
+        </div>
+
+        <div class="section">
+            <div class="info-box">
+                <h3>📊 Track Your Recovery</h3>
+                <p>Log your wearable data (Whoop, Garmin, etc.) to monitor recovery and optimize training.</p>
+            </div>
+
+            <div class="form-group">
+                <label for="hrv">HRV Score:</label>
+                <input type="number" id="hrv" placeholder="72.5" step="0.1" min="0" max="200" required>
+                <small style="color: #666; font-weight: normal;">Heart Rate Variability - higher is better</small>
+            </div>
+
+            <div class="form-group">
+                <label for="rhr">Resting Heart Rate (bpm):</label>
+                <input type="number" id="rhr" placeholder="58" min="30" max="120" required>
+                <small style="color: #666; font-weight: normal;">Lower RHR indicates better recovery</small>
+            </div>
+
+            <div class="form-group">
+                <label for="sleep">Sleep Hours:</label>
+                <input type="number" id="sleep" placeholder="7.2" step="0.1" min="0" max="24" required>
+                <small style="color: #666; font-weight: normal;">Total sleep duration</small>
+            </div>
+
+            <div class="form-group">
+                <label for="bodyweight">Bodyweight (kg):</label>
+                <input type="number" id="bodyweight" placeholder="75.5" step="0.1" min="30" max="300" required>
+                <small style="color: #666; font-weight: normal;">Track weight changes over time</small>
+            </div>
+
+            <div class="checkbox-group">
+                <label>
+                    <input type="checkbox" id="creatine">
+                    💊 On Creatine Cycle
+                </label>
+                <label>
+                    <input type="checkbox" id="fasted">
+                    🌅 Fasted Workout
+                </label>
+            </div>
+
+            <button onclick="logMetrics()">❤️ Log Metrics</button>
+
+            <div id="metricsResult" class="result" style="display: none;"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8000';
+
+        async function apiCall(endpoint, method = 'GET', data = null) {
+            const config = {
+                method,
+                headers: { 'Content-Type': 'application/json' }
+            };
+            if (data) config.body = JSON.stringify(data);
+
+            try {
+                const response = await fetch(`${API_BASE}${endpoint}`, config);
+                const result = await response.json();
+                return { status: response.status, data: result };
+            } catch (error) {
+                return { status: 0, data: { error: error.message } };
+            }
+        }
+
+        async function logMetrics() {
+            const data = {
+                hrv: parseFloat(document.getElementById('hrv').value),
+                rhr: parseInt(document.getElementById('rhr').value),
+                sleep_hours: parseFloat(document.getElementById('sleep').value),
+                bodyweight: parseFloat(document.getElementById('bodyweight').value),
+                creatine_cycle: document.getElementById('creatine').checked,
+                fasted: document.getElementById('fasted').checked,
+                date: new Date().toISOString().split('T')[0]
+            };
+
+            // Validation
+            if (data.hrv <= 0 || data.rhr <= 0 || data.sleep_hours <= 0 || data.bodyweight <= 0) {
+                showResult('❌ Please enter valid positive numbers for all required fields', 'error');
+                return;
+            }
+
+            const result = await apiCall('/metrics/', 'POST', data);
+            const resultDiv = document.getElementById('metricsResult');
+
+            if (result.status === 200) {
+                showResult('✅ Metrics logged successfully!', 'success');
+                // Clear form
+                document.getElementById('hrv').value = '';
+                document.getElementById('rhr').value = '';
+                document.getElementById('sleep').value = '';
+                document.getElementById('bodyweight').value = '';
+                document.getElementById('creatine').checked = false;
+                document.getElementById('fasted').checked = false;
+            } else {
+                showResult(`❌ Error: ${JSON.stringify(result.data)}`, 'error');
+            }
+        }
+
+        function showResult(message, type) {
+            const resultDiv = document.getElementById('metricsResult');
+            resultDiv.textContent = message;
+            resultDiv.className = `result ${type}`;
+            resultDiv.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
